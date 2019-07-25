@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import 'bootstrap/dist/css/bootstrap.css';
+import { Redirect } from 'react-router-dom';
+import api from '../services/api-client';
 
 function Register() {
   const [username, setUsername] = useState('');
@@ -7,10 +8,10 @@ function Register() {
   const [password, setPassword] = useState('');
   const [passwordConf, setConf] = useState('');
 
-  const handleUsername = value => setUsername(value);
-  const handleEmail = value => setEmail(value);
-  const handlePassword = value => setUsername(value);
-  const handleConf = value => setConf(value);
+  const handleUsername = e => setUsername(e.target.value);
+  const handleEmail = e => setEmail(e.target.value);
+  const handlePassword = e => setPassword(e.target.value);
+  const handleConf = e => setConf(e.target.value);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -19,7 +20,9 @@ function Register() {
     } else if (password !== passwordConf) {
       alert('Passwords do not match');
     } else {
-      // api call
+      api.registerUser(username, email, password)
+        .then(res => res.status === 201 && <Redirect to='/login'/>)
+        .catch(e => console.log(e));
     }
   }
 
@@ -29,7 +32,7 @@ function Register() {
       <input type="text" value={email} onChange={handleEmail}/>
       <input type="password" value={password} onChange={handlePassword}/>
       <input type="password" value={passwordConf} onChange={handleConf}/>
-      <button type="submit">Register</button>
+      <button type="submit" value="Register"></button>
     </form>
   );
 }
