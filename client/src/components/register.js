@@ -21,7 +21,7 @@ function Register() {
       alert('Passwords do not match');
     } else {
       api.registerUser(username, email, password)
-        .then(res => res.status === 201 && <Redirect to='/login'/>)
+        .then(res => res.status === 201)
         .catch(e => console.log(e));
     }
   }

@@ -1,16 +1,20 @@
 from flask import Flask, request, make_response, jsonify, session
 from flask_jwt_extended import JWTManager
+from flask_jwt_extended import (create_access_token, jwt_required, get_jwt_identity, get_raw_jwt)
 from flask_cors import CORS
 from flask_mysqldb import MySQL
 from flask_bcrypt import Bcrypt
-
+from xmljson import badgerfish as bf
+from xml.etree.ElementTree import fromstring
+import requests
+from json import dumps
 
 app = Flask(__name__)
 
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = ''
-app.config['MYSQL_DB'] = ''
+app.config['MYSQL_DB'] = 'books'
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 app.config['JWT_SECRET_KEY'] = ''
 
@@ -51,12 +55,31 @@ def login():
             data = cur.fetchone()
             hash = data['password']
             if bcrypt.check_password_hash(hash, password):
-                print(bcrypt.check_password_hash(hash, password))
-                return make_response(jsonify('logged in'), 200)
+                access_token = create_access_token(identity = data['id'])
+                return make_response(jsonify({'access_token': access_token}), 200)
             else:
                 return make_response(jsonify('unauthorized'), 401)
         else:
             return make_response(jsonify('user does not exists'), 400)
+
+@app.route('/search')
+@jwt_required
+def findbooks():
+    key = ''
+    params = request.args.get('q')
+    try:
+        response = requests.get('https://www.goodreads.com/search/index.xml?key=' + key + '&q=' + params)
+        jsonresponse = bf.data(fromstring(response.content))
+        return make_response(jsonresponse, 200)
+    except:
+        return make_response('api call error', 500)
+
+@app.route('/booktoread', methods=['POST'])
+@jwt_required
+def savebook():
+    print(request.get_json())
+    return make_response('hi', 201)
+
 
 if __name__ == '__main__':
     app.run(debug=True)
