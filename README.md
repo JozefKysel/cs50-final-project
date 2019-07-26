@@ -7,5 +7,8 @@ The books is an app that allows you to keep track of your readings. You can sear
 You can simply create an account, log in and use the app.
 
 <img src="/images/Screen Shot 2019-07-26 at 19.43.57.png"/>
+<img src="/images/Screen Shot 2019-07-26 at 19.44.14.png"/>
+<img src="/images/Screen Shot 2019-07-26 at 19.44.25.png"/>
+<img src="Screen Shot 2019-07-26 at 19.52.15.png"/>
 
 Tech used: Python (Flask), React, Goodreads API, MySQL, JWT.
