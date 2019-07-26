@@ -77,8 +77,51 @@ def findbooks():
 @app.route('/booktoread', methods=['POST'])
 @jwt_required
 def savebook():
-    print(request.get_json())
-    return make_response('hi', 201)
+    data = request.get_json()
+    userid = get_jwt_identity()
+    cur = mysql.connection.cursor()
+    recordExits = cur.execute("SELECT * FROM books WHERE user_id = %s AND title = %s AND author = %s", (userid, data['title'], data['author'],))
+    if not recordExits:
+        cur.execute("INSERT INTO books (user_id, rating, author, image, small_image, title, completed) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+            ,(userid, data['rating'], data['author'], data['image'], data['smallImage'], data['title'], False,))
+        mysql.connection.commit()
+        cur.close()
+        return make_response('created', 201)
+    cur.close()
+    return make_response('record already exists', 204)
+
+@app.route('/mybooks')
+@jwt_required
+def findmybooks():
+    userid = get_jwt_identity()
+    completed = request.args.get('q')
+    cur = mysql.connection.cursor()
+    if completed == 'true':
+        cur.execute("SELECT * FROM books WHERE user_id = %s AND completed = True", (userid,))
+    elif completed == 'false':
+        cur.execute("SELECT * FROM books WHERE user_id = %s AND completed = False", (userid,))
+    else:
+        cur.execute("SELECT * FROM books WHERE user_id = %s", (userid,))
+    data = cur.fetchall()
+    mysql.connection.commit()
+    cur.close()
+    return make_response(jsonify(data), 200)
+
+@app.route('/markasread', methods=['PUT'])
+@jwt_required
+def markasread():
+    book = request.get_json()
+    userid = get_jwt_identity()
+    cur = mysql.connection.cursor()
+    query = cur.execute("SELECT * FROM books WHERE user_id = %s AND title = %s AND author = %s", (userid, book['title'], book['author'],))
+    if not query:
+        cur.execute("INSERT INTO books (user_id, rating, author, image, small_image, title, completed) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+            ,(userid, book['rating'], book['author'], book['image'], book['smallImage'], book['title'], True,))
+    else:
+        cur.execute("UPDATE books SET completed = True WHERE user_id = %s AND title = %s AND author = %s", (userid, book['title'], book['author'],))
+    mysql.connection.commit()
+    cur.close()
+    return make_response('book status updated', 200)
 
 
 if __name__ == '__main__':

@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { Redirect } from 'react-router-dom';
+import React, { useState } from 'react';
 import api from '../services/api-client';
+import './register.css';
 
 function Register() {
   const [username, setUsername] = useState('');
@@ -27,13 +27,28 @@ function Register() {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input type="text" value={username} onChange={handleUsername}/>
-      <input type="text" value={email} onChange={handleEmail}/>
-      <input type="password" value={password} onChange={handlePassword}/>
-      <input type="password" value={passwordConf} onChange={handleConf}/>
-      <button type="submit" value="Register"></button>
-    </form>
+    <div className="register">
+      <h4 id="header">the. books.</h4>
+      <form className="register-form" onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label htmlFor="exampleInputEmail1">Username</label>
+          <input type="text" className="form-control" id="exampleInputEmail1" value={username} onChange={handleUsername} aria-describedby="emailHelp" placeholder="Enter username"/>
+        </div>
+        <div className="form-group">
+          <label htmlFor="exampleInputEmail1">Username</label>
+          <input type="text" className="form-control" id="exampleInputEmail1" value={email} onChange={handleEmail} aria-describedby="emailHelp" placeholder="Enter email"/>
+        </div>
+        <div className="form-group">
+          <label htmlFor="exampleInputPassword1">Password</label>
+          <input type="password" className="form-control" id="exampleInputPassword1" value={password} onChange={handlePassword} placeholder="Password"/>
+        </div>
+        <div className="form-group">
+          <label htmlFor="exampleInputPassword1">Confirm Password</label>
+          <input type="password" className="form-control" id="exampleInputPassword1" value={passwordConf} onChange={handleConf} placeholder="Password"/>
+        </div>
+        <button type="submit" className="btn btn-primary">Submit</button>
+      </form>
+    </div>
   );
 }
 

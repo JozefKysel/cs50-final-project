@@ -2,12 +2,13 @@ import React from 'react';
 import Book from './book';
 import './library.css';
 
-function Library({ bookList }) {
-  return bookList.length ? bookList.map(book => (
-    <div className="container">
-      <Book book={book}/>
+function Library({ bookList, fetchMyBooks }) {
+  const unique_key = (book) => book.author + book.title + book.rating;
+  return bookList.length > 0 ? bookList.map(book =>
+    <div className="library" key={unique_key(book)}>
+      <Book fetchMyBooks={fetchMyBooks} bookList={bookList} book={book}/>
     </div>
-  )) : (<div>Search for books....</div>)
+  ) : <div className="search">Search for books....</div>
 }
 
 export default Library;

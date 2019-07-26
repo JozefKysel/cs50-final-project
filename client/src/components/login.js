@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import api from '../services/api-client';
+import './login.css';
 
 function Login(props) {
 
@@ -28,17 +29,20 @@ function Login(props) {
   const saveAccessToken = token => localStorage.setItem('token', token);
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div className="form-group">
-        <label htmlFor="username">Username </label>
-        <input type="text" id="username" value={username} onChange={handleUsername} placeholder="Username"/>
-      </div>
-      <div className="form-group">
-        <label htmlFor="password">Password </label>
-        <input type="password" id="password" value={password} onChange={handlePassword} placeholder="Password"/>
-      </div>
-      <button type="submit">Log In</button>
-    </form>
+    <div className="form">
+      <h4 id="header">the. books.</h4>
+      <form onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label htmlFor="exampleInputEmail1">Username</label>
+          <input type="text" className="form-control" id="exampleInputEmail1" value={username} onChange={handleUsername} aria-describedby="emailHelp" placeholder="Enter username"/>
+        </div>
+        <div className="form-group">
+          <label htmlFor="exampleInputPassword1">Password</label>
+          <input type="password" className="form-control" id="exampleInputPassword1" value={password} onChange={handlePassword} placeholder="Password"/>
+        </div>
+        <button type="submit" className="btn btn-primary">Submit</button>
+      </form>
+    </div>
   );
 }
 

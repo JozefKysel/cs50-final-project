@@ -1,0 +1,12 @@
+.register {
+  height: 100vh;
+}
+
+#header {
+  text-align: center;
+  margin-top: 15px;
+}
+
+.register-form {
+  margin-top: 25px;
+}

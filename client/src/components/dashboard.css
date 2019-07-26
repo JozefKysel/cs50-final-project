@@ -1,6 +1,43 @@
-.container {
+.container-dashboard {
   display: flex;
   flex-direction: column;
-  height: 75vh;
+  height: 100vh;
+}
+
+.logo {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: brown;
+  height: 275px;
+}
+
+.library {
   overflow: scroll;
+}
+
+#search {
+  height: 25px;
+  align-self: center;
+  margin-right: 10px;
+}
+
+#name-logo {
+  align-self: center;
+  margin-left: 10px;
+}
+
+.navbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  font-size: 60%;
+  width: 100%;
+  padding: 0;
+}
+
+.navigation {
+  width: 33%;
+  background: transparent;
+  border-style: none;
 }
