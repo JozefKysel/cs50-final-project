@@ -13,4 +13,6 @@ You can simply create an account, log in and use the app.
 </div>
 <br>
 <br>
+
 Tech used: Python (Flask), React, Goodreads API, MySQL, JWT.
+

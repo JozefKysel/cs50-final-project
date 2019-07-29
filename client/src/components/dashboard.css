@@ -9,7 +9,15 @@
   flex-direction: row;
   justify-content: space-between;
   background-color: brown;
-  height: 275px;
+  max-height: 100vhpx;
+  min-height: 99px;
+}
+
+.logout {
+  margin: 0;
+  padding: 0;
+  background-color: brown;
+  color: black;
 }
 
 .library {

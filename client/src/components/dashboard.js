@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import api from '../services/api-client';
 import Library from './library';
 import parsers from '../services/parsers';
+import { Link } from 'react-router-dom';
 import './dashboard.css';
 
 function Dashboard() {
@@ -27,8 +28,11 @@ function Dashboard() {
       }
   }
 
+  const logout = () => localStorage.clear();
+
   return (
     <div className="container-dashboard">
+      <Link className="logout" to="/" onClick={logout}>Logout</Link>
       <div className="logo">
         <h4 id="name-logo"> the. books.</h4>
         <input id="search" type="text" placeholder="search" onKeyUp={handleSearch}/>

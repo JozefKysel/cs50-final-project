@@ -6,8 +6,8 @@ function Book({ book, fetchMyBooks}) {
 
   const saveBookToRead = book => api.saveBookToRead(book);
   const markAsRead = (book) => {
-    api.markAsRead(book);
-    fetchMyBooks();
+    api.markAsRead(book)
+      .then(res => res.status === 200 && fetchMyBooks());
   };
 
   return (

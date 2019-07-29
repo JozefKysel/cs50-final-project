@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import api from '../services/api-client';
+import { Link } from 'react-router-dom';
 import './login.css';
 
 function Login(props) {
@@ -17,19 +18,18 @@ function Login(props) {
     } else {
       api.loginUser(username, password)
         .then(res => res.json())
-        .then(res => {
-          if (res.access_token) {
-            saveAccessToken(res.access_token);
-            props.history.push('/dashboard');
-          }
-        });
+        .then(res => res.access_token && saveTokenAndRedirect(res.access_token));
     }
   }
 
-  const saveAccessToken = token => localStorage.setItem('token', token);
+  const saveTokenAndRedirect = token => {
+    props.history.push('/dashboard');
+    localStorage.setItem('token', token);
+  }
 
   return (
     <div className="form">
+      <Link to='/register'><p>Register</p></Link>
       <h4 id="header">the. books.</h4>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
@@ -40,7 +40,7 @@ function Login(props) {
           <label htmlFor="exampleInputPassword1">Password</label>
           <input type="password" className="form-control" id="exampleInputPassword1" value={password} onChange={handlePassword} placeholder="Password"/>
         </div>
-        <button type="submit" className="btn btn-primary">Submit</button>
+        <button type="submit" className="btn btn-primary">Log In</button>
       </form>
     </div>
   );
