@@ -2,10 +2,6 @@
 
 # THE. BOOKS.
 
-# cs50-final-project
-
-# THE. BOOKS.
-
 The books is an app that allows you to keep track of your readings. You can search for books, save books you are planning to read and keep track of books that you already read.
 <br>
 <br>
@@ -17,4 +13,6 @@ You can simply create an account, log in and use the app.
 </div>
 <br>
 <br>
+
 Tech used: Python (Flask), React, Goodreads API, MySQL, JWT.
+
